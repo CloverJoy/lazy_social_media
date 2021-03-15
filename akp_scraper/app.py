@@ -2,16 +2,14 @@ import requests, datetime, threading, os, urllib.request
 from bs4 import BeautifulSoup
 from instabot import Bot 
 
-
-response = requests.get("https://www.allkpop.com/")
-soup = BeautifulSoup(response.text, "html.parser")
-
 bot = Bot()
 bot.login()
 current_headline = ""
 current_image = "" 
 
 def scrap_akp():
+    response = requests.get("https://www.allkpop.com/")
+    soup = BeautifulSoup(response.text, "html.parser")
     global current_headline, current_image
     headlines = soup.select(".title")
     images = soup.select(".image")
