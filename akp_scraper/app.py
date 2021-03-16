@@ -47,8 +47,4 @@ def scrap_akp():
              current_headline = newest_headline
              print(f"No update: {newest_headline}, category: {category}")
 
-        
-        # download pics, update instagram pics, delete pics
-        # redo this operation after 5 mins
-
     threading.Timer(60 ,scrap_akp).start()
