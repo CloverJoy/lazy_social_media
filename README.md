@@ -8,7 +8,7 @@ Python 3 and pipenv
 ## How to start
 1. After forking this repo ```cd lazy_social_media```
 2. Install all the depedencies ```pipenv install``` after that run the pipenv shell ```pipenv shell```
-3. 4. for the first timer, uncomment the bot.login line inside akp_scraper/app.py then Follow the prompt from Instabot
-5. If not, comment that line
-4. Then run the program by ```python app.py```
-5. Happy auto posting!
+3. for the first timer, uncomment the bot.login line inside akp_scraper/app.py then Follow the prompt from Instabot
+4. If not, comment that line
+5. Then run the program by ```python app.py```
+6. Happy auto posting!
