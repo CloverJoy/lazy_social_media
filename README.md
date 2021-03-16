@@ -1,2 +1,2 @@
 # lazy_social_media
-socmed automation with python
+Webscraper and Instagram post automation with python powered by beautifulsoup4 and instabot
