@@ -15,8 +15,11 @@ def scrap_akp():
     images = soup.select(".image")
     newest_headline = headlines[1].select(".h_a_i")[0].getText()
     imageurl = images[1].select(".b-lazy")[0].get("data-src")
-    imagename = "image." + imageurl[-3:]
-    print(imagename)
+    if (imageurl[-4:] == "jpeg"):
+        imagename = "image." + imageurl[-4:]
+    else:
+        imagename = "image." + imageurl[-3:]
+        print(imagename)
     
     opener=urllib.request.build_opener()
     opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
@@ -24,7 +27,10 @@ def scrap_akp():
 
     if newest_headline == current_headline:
         if current_image:
-            os.remove(current_image +".REMOVE_ME")
+            try:
+                os.remove(current_image +".REMOVE_ME")
+            except:
+                os.remove(current_image)
             current_image = ""
         print(f"still same news: {current_headline}")
 
@@ -35,6 +41,7 @@ def scrap_akp():
         urllib.request.urlretrieve(imageurl, imagename)
         bot.upload_photo(imagename, 
                  caption = f"{current_headline}. Source: allkpop")
+        
         # download pics, update instagram pics, delete pics
         # redo this operation after 5 mins
 
