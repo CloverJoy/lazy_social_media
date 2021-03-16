@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from instabot import Bot 
 
 bot = Bot()
-bot.login()
+# bot.login()
 current_headline = ""
 current_image = "" 
 
@@ -13,13 +13,14 @@ def scrap_akp():
     global current_headline, current_image
     headlines = soup.select(".title")
     images = soup.select(".image")
+    categories = soup.select(".category")
     newest_headline = headlines[1].select(".h_a_i")[0].getText()
     imageurl = images[1].select(".b-lazy")[0].get("data-src")
+    category = categories[1].getText()
     if (imageurl[-4:] == "jpeg"):
         imagename = "image." + imageurl[-4:]
     else:
         imagename = "image." + imageurl[-3:]
-        print(imagename)
     
     opener=urllib.request.build_opener()
     opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
@@ -32,15 +33,20 @@ def scrap_akp():
             except:
                 os.remove(current_image)
             current_image = ""
-        print(f"still same news: {current_headline}")
+        print(f"still same news: {current_headline}, category: {category}")
 
     else:
-        current_headline = newest_headline
-        current_image = imagename 
-        print(f"updated headline: {current_headline}")
-        urllib.request.urlretrieve(imageurl, imagename)
-        bot.upload_photo(imagename, 
-                 caption = f"{current_headline}. Source: allkpop")
+        if category == "News":
+            current_headline = newest_headline
+            current_image = imagename
+            print(f"updated headline: {current_headline}, category: {category}")
+            urllib.request.urlretrieve(imageurl, imagename)
+            bot.upload_photo(imagename, 
+                    caption = f"{current_headline}. Source: allkpop")
+        else:
+             current_headline = newest_headline
+             print(f"No update: {newest_headline}, category: {category}")
+
         
         # download pics, update instagram pics, delete pics
         # redo this operation after 5 mins
